@@ -52,85 +52,9 @@ plt.xlabel("Grau")
 plt.ylabel("Frequência")
 plt.title("Distribuição de Graus da Rede")
 plt.grid(axis="y", linestyle="--", alpha=0.7)
-plt.savefig("./imagens/distribuicao_graus.png")
+plt.savefig("./imagens/distribuicao_graus.svg")
 plt.show()
 
 # Assortatividade (se nós de graus semelhantes tendem a se conectar)
 assortatividade = nx.degree_assortativity_coefficient(G)
 print(f"Assortatividade da rede (grau): {assortatividade:.4f}")
-
-# ----------------------------
-# Subgrafo para o gênero "Comédia"
-# ----------------------------
-genero_alvo = "Comédia"
-
-if genero_alvo in G.nodes:
-    vizinhos = list(G.neighbors(genero_alvo))
-    sub_nodes = [genero_alvo] + vizinhos
-    subG = G.subgraph(sub_nodes)
-
-    # Layout mais compacto
-    pos = nx.spring_layout(subG, seed=42)
-
-    plt.figure(figsize=(6, 5))
-    nx.draw(
-        subG, pos,
-        with_labels=True,
-        node_color=["lightgreen" if n == genero_alvo else "skyblue" for n in subG.nodes()],
-        node_size=1200,
-        font_size=10,
-        font_weight="bold",
-        edge_color="gray"
-    )
-    plt.title(f"Grafo focado no gênero: {genero_alvo}", fontsize=14)
-    plt.savefig("./imagens/grafo_comedia.png")
-    plt.show()
-else:
-    print(f"O gênero '{genero_alvo}' não está presente no grafo.")
-
-# ----------------------------
-# Calcular renda total por gênero (para o tamanho dos nós)
-# ----------------------------
-renda_por_genero = {}
-for genero in [n for n, d in G.nodes(data=True) if d["bipartite"] == "genero"]:
-    filmes_conectados = G.neighbors(genero)
-    rendas = [G.nodes[filme]["renda_total"] for filme in filmes_conectados]
-    renda_por_genero[genero] = sum(rendas)
-
-# ----------------------------
-# Visualização do Grafo com tamanhos proporcionais à renda
-# ----------------------------
-pos = nx.spring_layout(G, seed=42)
-
-plt.figure(figsize=(12, 8))
-
-# Precisamos criar listas de tamanhos e cores na mesma ordem de G.nodes()
-node_sizes = []
-node_colors = []
-
-for n in G.nodes():
-    if G.nodes[n]["bipartite"] == "genero":
-        # Escalar o tamanho do nó de gênero pela renda total
-        renda = renda_por_genero.get(n, 1)
-        node_sizes.append(800 + renda * 10)  # fator multiplicador ajustável
-        node_colors.append("lightgreen")
-    else:
-        node_sizes.append(1200)  # filmes com tamanho fixo
-        node_colors.append("skyblue")
-
-nx.draw(
-    G, pos,
-    with_labels=True,
-    node_color=node_colors,   # lista com uma cor para cada nó
-    node_size=node_sizes,     # lista com tamanho correspondente
-    font_size=10,
-    font_weight="bold",
-    edge_color="gray"
-)
-
-plt.title("Grafo Bipartido: Filmes ↔ Gêneros\n(Tamanho dos gêneros proporcional à renda total)", fontsize=14)
-plt.show()
-
-print("\n=== Atributos dos nós ===")
-for n, d in G.nodes(data=True):
-    print(n, d)
