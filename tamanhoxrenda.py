@@ -87,4 +87,5 @@ nx.draw(
 )
 
 plt.title("Grafo Bipartido: Filmes ↔ Gêneros\n(Tamanho dos gêneros proporcional à renda total)", fontsize=14)
+plt.savefig("./imagens/tamanhaxrenda.svg")
 plt.show()

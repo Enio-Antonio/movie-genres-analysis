@@ -1,0 +1,7 @@
+=== Métricas da Rede ===
+Número de nós: 61
+Número de arestas: 50
+
+Grau médio da rede: 1.64
+Densidade da rede: 0.0273
+Assortatividade da rede (grau): -0.5568

@@ -52,6 +52,7 @@ plt.xlabel("Grau")
 plt.ylabel("Frequência")
 plt.title("Distribuição de Graus da Rede")
 plt.grid(axis="y", linestyle="--", alpha=0.7)
+plt.savefig("./imagens/distribuicao_graus.png")
 plt.show()
 
 # Assortatividade (se nós de graus semelhantes tendem a se conectar)
@@ -82,6 +83,7 @@ if genero_alvo in G.nodes:
         edge_color="gray"
     )
     plt.title(f"Grafo focado no gênero: {genero_alvo}", fontsize=14)
+    plt.savefig("./imagens/grafo_comedia.png")
     plt.show()
 else:
     print(f"O gênero '{genero_alvo}' não está presente no grafo.")
