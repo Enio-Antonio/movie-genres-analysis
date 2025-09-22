@@ -31,11 +31,35 @@ for _, row in df.iterrows():
 # ----------------------------
 # Subgrafo para o gênero "Comédia"
 # ----------------------------
-lista_generos = ["Biografia", "Infantil", "Documentário", "Adolescente", "Musical", "Animação", "Drama", "Suspense", "Terror", "Ficção"] # comédia já foi
-#genero_alvo = "Comédia"
+#lista_generos = ["Biografia", "Infantil", "Documentário", "Adolescente", "Musical", "Animação", "Drama", "Suspense", "Terror", "Ficção"] # comédia já foi
+genero_alvo = "Comédia"
 
-for genero_alvo in lista_generos:
-    if genero_alvo in G.nodes:
+# for genero_alvo in lista_generos:
+#     if genero_alvo in G.nodes:
+#         vizinhos = list(G.neighbors(genero_alvo))
+#         sub_nodes = [genero_alvo] + vizinhos
+#         subG = G.subgraph(sub_nodes)
+
+#         # Layout mais compacto
+#         pos = nx.spring_layout(subG, seed=42)
+
+#         plt.figure(figsize=(6, 5))
+#         nx.draw(
+#             subG, pos,
+#             with_labels=True,
+#             node_color=["lightgreen" if n == genero_alvo else "skyblue" for n in subG.nodes()],
+#             node_size=1200,
+#             font_size=10,
+#             font_weight="bold",
+#             edge_color="gray"
+#         )
+#         plt.title(f"Grafo focado no gênero: {genero_alvo}", fontsize=14)
+#         plt.savefig(f"./imagens/grafo_{genero_alvo.lower()}.svg")
+#         #plt.show()
+#     else:
+#         print(f"O gênero '{genero_alvo}' não está presente no grafo.")
+
+if genero_alvo in G.nodes:
         vizinhos = list(G.neighbors(genero_alvo))
         sub_nodes = [genero_alvo] + vizinhos
         subG = G.subgraph(sub_nodes)
@@ -54,7 +78,7 @@ for genero_alvo in lista_generos:
             edge_color="gray"
         )
         plt.title(f"Grafo focado no gênero: {genero_alvo}", fontsize=14)
-        plt.savefig(f"./imagens/grafo_{genero_alvo.lower()}.svg")
+        plt.savefig(f"grafo_comedia.svg")
         #plt.show()
-    else:
-        print(f"O gênero '{genero_alvo}' não está presente no grafo.")
+else:
+    print(f"O gênero '{genero_alvo}' não está presente no grafo.")
