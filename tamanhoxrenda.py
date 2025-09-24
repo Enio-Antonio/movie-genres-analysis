@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # ==========================
 # 1. Carregar o dataset
 # ==========================
-df = pd.read_csv("dataset.csv")
+df = pd.read_csv("datasetv2.csv")
 
 # Certifique-se de que a coluna renda_total é numérica
 #df["renda_total"] = pd.to_numeric(df["renda_total"], errors="coerce").fillna(0)
@@ -23,7 +23,7 @@ for _, row in df.iterrows():
     G.add_node(titulo, bipartite="filme", renda_total=renda)
 
     # Pode haver mais de um gênero por filme (separados por vírgula, barra, etc.)
-    generos = [g.strip() for g in str(row["genero"]).split(",")]
+    generos = [g.strip() for g in str(row["genero"]).split("/")]
 
     for genero in generos:
         # Cria aresta filme ↔ gênero
@@ -34,7 +34,7 @@ for _, row in df.iterrows():
 # ==========================
 renda_por_genero = {}
 
-for genero in set(df["genero"].str.split(",").sum()):
+for genero in set(df["genero"].str.split("/").sum()):
     if pd.isna(genero):
         continue
     renda_total = 0
@@ -54,7 +54,7 @@ for genero, renda in renda_por_genero.items():
 # ==========================
 # 5. Visualização do grafo
 # ==========================
-pos = nx.spring_layout(G, seed=42, k=0.5, iterations=100)
+pos = nx.spring_layout(G, seed=43, k=0.5, iterations=100)
 
 node_sizes = []
 node_colors = []
@@ -87,5 +87,5 @@ nx.draw(
 )
 
 plt.title("Grafo Bipartido: Filmes ↔ Gêneros\n(Tamanho dos gêneros proporcional à renda total)", fontsize=14)
-plt.savefig("./imagens/tamanhaxrenda.svg")
+plt.savefig("./imagens/tamanhoxrenda.svg")
 plt.show()

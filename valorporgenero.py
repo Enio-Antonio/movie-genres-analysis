@@ -1,9 +1,9 @@
 import pandas as pd
-df = pd.read_csv("dataset.csv")
+df = pd.read_csv("datasetv2.csv")
 
 renda_por_genero = {}
 
-for genero in set(df["genero"].str.split(",").sum()):
+for genero in set(df["genero"].str.split("/").sum()):
     if pd.isna(genero):
         continue
     renda_total = 0
