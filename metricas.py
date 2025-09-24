@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 # ----------------------------
 # Carregar dataset
 # ----------------------------
-df = pd.read_csv("dataset.csv")
+df = pd.read_csv("datasetv2.csv")
 
 # Converter renda_total para número (caso venha como string)
 df["renda_total"] = pd.to_numeric(df["renda_total"], errors="coerce").fillna(0)
 
 # Garantir que a coluna genero seja uma lista (se estiver como string separada por vírgulas)
-df["genero"] = df["genero"].apply(lambda x: [g.strip() for g in str(x).split(",")])
+df["genero"] = df["genero"].apply(lambda x: [g.strip() for g in str(x).split("/")])
 
 # ----------------------------
 # Construindo o Grafo Bipartido
